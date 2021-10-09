@@ -14,12 +14,20 @@ public class RequestService {
 	RequestDao aDao = new RequestDao();
 	
 	
-	//create a method that gets the DAO data and sends it up to the controller
-	//(this method will get called by the controller layer)
 	public List<Request> getAllRequests() {
 		return aDao.getAllRequests();
 	}
 	
+	public List<Request> getRequestStatus(String status) {
+		return aDao.getRequestPending(status);
+	}
 	//all we're doing is calling the dao method in order to get a List of all the Avengers to send to the controller
 	
+	public void addRequest(Request request) {
+		aDao.addRequest(request);
+	}
+	
+	public void updateRequestStatus(int id, String status) {
+		aDao.updateRequestStatus(id, status);
+	}
 }

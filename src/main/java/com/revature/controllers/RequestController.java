@@ -15,10 +15,11 @@ import io.javalin.http.Handler;
 public class RequestController {
 	
 	RequestService as = new RequestService(); 
+	
 
 	public Handler getAllRequestsHandler = (ctx) -> {
 		
-		if(ctx.req.getSession(false) != null) { //if a session exists...
+		//if(ctx.req.getSession(false) != null) { //if a session exists...
 		
 		//we create an Array with Avenger data (using the service to talk to the dao)
 		List<Request> allRequests = as.getAllRequests();
@@ -32,12 +33,45 @@ public class RequestController {
 		
 		ctx.status(200); //200 = OK (success)
 		
-		} else {
-			ctx.status(403); //forbidden status code 
-		}
+		//} else {
+		//	ctx.status(403); //forbidden status code 
+		//}
 		
 	};
 
-
+	public Handler getRequestStatusHandler = (ctx) -> {
+		Gson another = new Gson();
+		Request JSONRequests = another.fromJson(ctx.body(), Request.class);
+		
+		//create list to return
+		List<Request> statusRequests = as.getRequestStatus(JSONRequests.getRequest_status());
+		//convert to json
+		Gson gson = new Gson();
+		String JSONResponse = gson.toJson(statusRequests); //convert our Java object into a JSON String
+		//send results
+		ctx.result(JSONResponse); //return our Avengers
+		ctx.status(200); //200 = OK (success)
+		
+	};
 	
+	public Handler addRequestHandler = (ctx) -> {
+		
+		Gson gson = new Gson();//instantate to convert		
+		Request JSONRequests = gson.fromJson(ctx.body(), Request.class); //http body --> java obj
+	
+		as.addRequest(JSONRequests);//run the new request object through our service and dao	
+		ctx.status(200); //return 200 = OK (success)
+		
+	};
+
+	public Handler updateRequestStatusHandler = (ctx) -> {
+		
+		Gson gson = new Gson();
+		Request JSONRequests = gson.fromJson(ctx.body(), Request.class);
+		
+		as.updateRequestStatus(JSONRequests.getRequest_id(), JSONRequests.getRequest_status());
+		//ctx.result(gson.toJson(JSONRequests.getRequest_status()));
+		ctx.status(204); //200 = OK (success)
+		
+	};
 }

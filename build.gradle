@@ -32,7 +32,7 @@ dependencies {
     testImplementation 'junit:junit:4.12'
     testRuntimeOnly 'org.junit.jupiter:junit-jupiter-engine' 
     
-    compile group: 'io.javalin', name: 'javalin', version: '3.13.3'
+    compile group: 'io.javalin', name: 'javalin', version: '4.1.0'
     compile "org.slf4j:slf4j-simple:1.7.30" //we had to add this according to the console
     
     //GSON lets us make JSON <-> Java object (POJO) conversions

@@ -7,12 +7,12 @@ import com.revature.models.Request;
 //these are the things I can do with my "requests" table, in postgres
 public interface RequestInterface {
 	
-	public List<Request> getAllRequests()     ;//retrieve everything in "requests" table
+	public List<Request> getAllRequests()                ;//retrieve everything in "requests" table
 	
-	public Request getRequestById(int id)     ;//retrieve data by request_id
+	public List<Request> getRequestPending(String status);//retrieve data by "pending"
 	
-	public boolean addRequest(Request request);//add a request to the table
+	public void addRequest(Request request)				  ;//add a request to the table
 	
-	public boolean deleteRequest(int id)      ;//delete a request from the table
+	public void updateRequestStatus(int id, String status);//update request_status by calling the id#
 
 }
